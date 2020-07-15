@@ -16,27 +16,25 @@ import { BaseLayout } from '../../views';
 import { Chart } from 'react-google-charts';
 import User from '../User';
 import routes from '../../routes';
+import dataProjects from '../../data/projects';
+import { getPercentPieChart } from '../../utils';
+
 
 const { Option } = Select;
 
 const { Countdown } = Statistic;
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
+const deadline = Date.now() + 1000 * 60 * 60 * 8;
 
 const dateFormat = 'LL';
 
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i}>{`Project ${i}`}</Option>);
+const projects = [];
+for (let i = 0; i < dataProjects.length; i++) {
+  projects.push(<Option key={dataProjects[i].id}>{dataProjects[i].name}</Option>);
 }
-
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-];
 
 const Project = () => {
   const [visible, setVisible] = useState(false);
+  const [works, setWorks] = useState([]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -47,11 +45,15 @@ const Project = () => {
   };
 
   const onClick = ({ key }) => {
-    console.log('key', key)
     if (key === routes.USER) {
       showDrawer();
     }
   };
+
+  const handleChange = (value, options) => {
+    let values = options.map(opt => Object.assign(opt, { percent: 0 }));
+    setWorks(values);
+  }
 
   return (
     <BaseLayout>
@@ -61,8 +63,9 @@ const Project = () => {
             mode="multiple"
             style={{ width: '100%' }}
             placeholder="Select project"
+            onChange={handleChange}
           >
-            {children}
+            {projects}
           </Select>
         </Col>
         <Col className="header-item header-right range-picker">
@@ -92,18 +95,18 @@ const Project = () => {
             <List
               size="large"
               className="timesheet-item"
-              dataSource={data}
+              dataSource={works}
               renderItem={item => (
                 <List.Item
                   actions={[
                     <div className="timesheet-progress">
-                      <Progress percent={30} size="small" showInfo={false} />
+                      <Progress percent={item.percent} size="small" showInfo={false} />
                     </div>,
                     <span className="time-item">00:30:00</span>,
                     <PlayCircleTwoTone />
                   ]}
                 >
-                  {item}
+                  {item.children}
                 </List.Item>
               )}
             />
@@ -148,11 +151,7 @@ const Project = () => {
                     loader={<div className="loading-chart">Loading Chart</div>}
                     data={[
                       ['Task', 'Hours per Day'],
-                      ['Work', 11],
-                      ['Eat', 2],
-                      ['Commute', 2],
-                      ['Watch TV', 2],
-                      ['Sleep', 7],
+                      ...getPercentPieChart(works)
                     ]}
                     options={{ is3D: true }}
                   />
