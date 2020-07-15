@@ -127,7 +127,16 @@
 .header-right {
   align-items: center;
 }
+.timeline-date,
 .header-right .avatar,
 .header-right .anticon-calendar {
   margin-right: .5rem;
+}
+.timeline {
+  margin-top: 30px;
+}
+.timeline .ant-tag {
+  font-size: 14px;
+  padding: 5px 35px;
+  margin: 0 15px;
 }
