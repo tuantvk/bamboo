@@ -3,13 +3,14 @@ import {
   Row, Col, Card, List,
   Menu, Select, Dropdown,
   Avatar, Statistic, Button,
-  Progress,
+  Progress, Timeline,
 } from 'antd';
 import {
   UserOutlined,
   LogoutOutlined,
   PlayCircleTwoTone,
   CalendarOutlined,
+  CheckSquareOutlined,
 } from '@ant-design/icons';
 import moment from 'moment';
 import { BaseLayout } from '../../views';
@@ -115,22 +116,23 @@ const Project = () => {
             </div>
           </Card>
           <Card title="Last Actions (3)" className="timesheet last-actions mr-0" bordered={false}>
-            <Chart
-              width={'100%'}
-              chartType="Timeline"
-              loader={<div className="loading-chart">Loading Chart</div>}
-              data={[
-                [
-                  { type: 'string', id: 'Term' },
-                  { type: 'string', id: 'Name' },
-                  { type: 'date', id: 'Start' },
-                  { type: 'date', id: 'End' },
-                ],
-                ['1', 'George Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
-                ['2', 'John Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
-                ['3', 'Thomas Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)],
-              ]}
-            />
+            <Timeline className="timeline">
+              <Timeline.Item
+                dot={<CheckSquareOutlined className="timeline-icon" />}
+              >
+                Create a services site 2015-09-01
+              </Timeline.Item>
+              <Timeline.Item
+                dot={<CheckSquareOutlined className="timeline-icon" />}
+              >
+                Solve initial network problems 2015-09-01
+              </Timeline.Item>
+              <Timeline.Item
+                dot={<CheckSquareOutlined className="timeline-icon" />}
+              >
+                Network problems being solved 2015-09-01
+              </Timeline.Item>
+            </Timeline>
           </Card>
         </Col>
         <Col span={8}>
