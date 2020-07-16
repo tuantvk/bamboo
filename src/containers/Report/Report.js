@@ -1,20 +1,31 @@
 import React from 'react';
 import {
-  Row, Col, Card,
-  Select, DatePicker,
+  Row, Col, Card, Tag,
+  Select, DatePicker, Timeline,
 } from 'antd';
 import { BaseLayout } from '../../views';
 import { Chart } from 'react-google-charts';
+import dataProjects from '../../data/projects';
+import dataReport from '../../data/report';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i}>{`Project ${i}`}</Option>);
+const projects = [];
+for (let i = 0; i < dataProjects.length; i++) {
+  projects.push(<Option key={dataProjects[i].id}>{dataProjects[i].name}</Option>);
 }
 
 const Report = () => {
+
+  const handleChange = (value, options) => {
+    console.log('value, options', value, options);
+  }
+
+  const handlePicker = (date, dateString) => {
+    console.log('date, dateString', date, dateString);
+  }
+
   return (
     <BaseLayout>
       <Row className="header">
@@ -23,12 +34,15 @@ const Report = () => {
             mode="multiple"
             style={{ width: '100%' }}
             placeholder="Select project"
+            onChange={handleChange}
           >
-            {children}
+            {projects}
           </Select>
         </Col>
         <Col span={7} className="header-item range-picker">
-          <RangePicker />
+          <RangePicker
+            onChange={handlePicker}
+          />
         </Col>
       </Row>
       <Row className="row-timesheet">
@@ -36,102 +50,27 @@ const Report = () => {
           <Card title="My Report" className="timesheet" bordered={false}>
             <Chart
               width={'100%'}
-              chartType="Timeline"
+              chartType="Calendar"
               loader={<div>Loading Chart</div>}
               data={[
-                [
-                  { type: 'string', id: 'Position' },
-                  { type: 'string', id: 'Name' },
-                  { type: 'date', id: 'Start' },
-                  { type: 'date', id: 'End' },
-                ],
-                [
-                  'President',
-                  'George Washington',
-                  new Date(1789, 3, 30),
-                  new Date(1797, 2, 4),
-                ],
-                ['President', 'John Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
-                [
-                  'President',
-                  'Thomas Jefferson',
-                  new Date(1801, 2, 4),
-                  new Date(1809, 2, 4),
-                ],
-                [
-                  'Vice President',
-                  'John Adams',
-                  new Date(1789, 3, 21),
-                  new Date(1797, 2, 4),
-                ],
-                [
-                  'Vice President',
-                  'Thomas Jefferson',
-                  new Date(1797, 2, 4),
-                  new Date(1801, 2, 4),
-                ],
-                [
-                  'Vice President',
-                  'Aaron Burr',
-                  new Date(1801, 2, 4),
-                  new Date(1805, 2, 4),
-                ],
-                [
-                  'Vice President',
-                  'George Clinton',
-                  new Date(1805, 2, 4),
-                  new Date(1812, 3, 20),
-                ],
-                [
-                  'Secretary of State',
-                  'John Jay',
-                  new Date(1789, 8, 25),
-                  new Date(1790, 2, 22),
-                ],
-                [
-                  'Secretary of State',
-                  'Thomas Jefferson',
-                  new Date(1790, 2, 22),
-                  new Date(1793, 11, 31),
-                ],
-                [
-                  'Secretary of State',
-                  'Edmund Randolph',
-                  new Date(1794, 0, 2),
-                  new Date(1795, 7, 20),
-                ],
-                [
-                  'Secretary of State',
-                  'Timothy Pickering',
-                  new Date(1795, 7, 20),
-                  new Date(1800, 4, 12),
-                ],
-                [
-                  'Secretary of State',
-                  'Charles Lee',
-                  new Date(1800, 4, 13),
-                  new Date(1800, 5, 5),
-                ],
-                [
-                  'Secretary of State',
-                  'John Marshall',
-                  new Date(1800, 5, 13),
-                  new Date(1801, 2, 4),
-                ],
-                [
-                  'Secretary of State',
-                  'Levi Lincoln',
-                  new Date(1801, 2, 5),
-                  new Date(1801, 4, 1),
-                ],
-                [
-                  'Secretary of State',
-                  'James Madison',
-                  new Date(1801, 4, 2),
-                  new Date(1809, 2, 3),
-                ],
+                [{ type: 'date', id: 'Date' }, { type: 'number', id: 'Won/Loss' }],
+                [new Date(2020, 3, 13), 0],
+                [new Date(2020, 3, 14), 4],
+                [new Date(2020, 3, 15), 4],
+                [new Date(2020, 3, 16), 0],
+                [new Date(2020, 3, 17), 4],
               ]}
             />
+            <Timeline className="timeline">
+              {dataReport.map(report => (
+                <Timeline.Item key={report.id}>
+                  <span className="timeline-date">{report.date}</span>
+                  {report.projects.map(proj => (
+                    <Tag key={proj.id} color={proj.color}>{proj.name}</Tag>
+                  ))}
+                </Timeline.Item>
+              ))}
+            </Timeline>
           </Card>
         </Col>
       </Row>

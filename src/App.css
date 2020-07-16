@@ -88,7 +88,7 @@
   display: flex;
   width: 100%;
 }
-.app-version p {
+.app-version span {
   margin-bottom: 3px;
   font-size: 10px;
 }
@@ -127,7 +127,31 @@
 .header-right {
   align-items: center;
 }
+.timeline-date,
 .header-right .avatar,
 .header-right .anticon-calendar {
   margin-right: .5rem;
+}
+.timeline {
+  margin-top: 30px;
+}
+.timeline .ant-tag {
+  font-size: 14px;
+  padding: 5px 35px;
+  margin: 0 15px;
+}
+.timeline .ant-timeline-item-head-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e5e5e5;
+  border-radius: 32px;
+  color: #c4c4c4;
+  border-color: #c4c4c4;
+}
+.timeline-icon {
+  font-size: 16px;
 }
