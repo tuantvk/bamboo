@@ -5,7 +5,8 @@
   "description": "Tracking time for management projects",
   "author": {
     "name": "tuantvk",
-    "url": "http://tuantvk.com"
+    "url": "http://tuantvk.com",
+    "email": "tuanhanhphuc123@gmail.com"
   },
   "build": {
     "productName": "Bamboo",
