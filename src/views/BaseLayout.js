@@ -39,7 +39,9 @@ export default ({ children }) => {
         <div className="app-version">
           <span>{`v${pjson.version} by`}&nbsp;</span>
           <span>
-            <a href={pjson.author.url} target="_blank">{`${pjson.author.name}`}</a>
+            <a href={pjson.author.url} target="_blank" rel="noopener noreferrer">
+              {`${pjson.author.name}`}
+            </a>
           </span>
         </div>
       </Sider>
