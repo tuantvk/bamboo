@@ -37,7 +37,10 @@ export default ({ children }) => {
           </Menu.Item>
         </Menu>
         <div className="app-version">
-          <p>{`v${pjson.version} by tuantvk`}</p>
+          <span>{`v${pjson.version} by`}&nbsp;</span>
+          <span>
+            <a href={pjson.author.url} target="_blank">{`${pjson.author.name}`}</a>
+          </span>
         </div>
       </Sider>
       <Layout>

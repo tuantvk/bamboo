@@ -88,7 +88,7 @@
   display: flex;
   width: 100%;
 }
-.app-version p {
+.app-version span {
   margin-bottom: 3px;
   font-size: 10px;
 }
